@@ -46,4 +46,30 @@ public class InMemoryAccountDaoTests {
         accountDao.updateAccount(existingAccount);
         Assert.assertEquals(accountDao.findAccount(EXISTING_ACCOUNT_NO), existingAccount);
     }
+
+
+
+    @Test(expected = AccountNotFoundException.class)
+    public void updateNotExistedAccount() {
+        accountDao.updateAccount(newAccount);
+    }
+    @Test
+    public void removeExistedAccount() {
+        accountDao.removeAccount(existingAccount);
+        Assert.assertFalse(accountDao.accountExists(EXISTING_ACCOUNT_NO));
+    }
+    @Test(expected = AccountNotFoundException.class)
+    public void removeNotExistedAccount() {
+        accountDao.removeAccount(newAccount);
+    }
+    @Test
+    public void findExistedAccount() {
+        Account account = accountDao.findAccount(EXISTING_ACCOUNT_NO);
+        Assert.assertEquals(account, existingAccount);
+    }
+    @Test(expected = AccountNotFoundException.class)
+    public void findNotExistedAccount() {
+        accountDao.findAccount(NEW_ACCOUNT_NO);
+    }
+
 }
